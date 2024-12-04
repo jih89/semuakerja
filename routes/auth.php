@@ -60,8 +60,10 @@ Route::middleware('auth')->group(function () {
         ->name('logout');
     Route::resource('products', ProductsController::class)->middleware('admin');
     
-    Route::get('job-posts/create', [JobPostController::class, 'create'])->name('job-posts.create');
-    Route::post('job-posts', [JobPostController::class, 'store'])->name('job-posts.store');
+    Route::middleware(['auth', \App\Http\Middleware\Employer::class])->group(function () {
+        Route::get('job-posts/create', [JobPostController::class, 'create'])->name('job-posts.create');
+        Route::post('job-posts', [JobPostController::class, 'store'])->name('job-posts.store');
+    });
     Route::get('job-posts/{jobPost}/edit', [JobPostController::class, 'edit'])->name('job-posts.edit');
     Route::put('job-posts/{jobPost}', [JobPostController::class, 'update'])->name('job-posts.update');
     Route::delete('job-posts/{jobPost}', [JobPostController::class, 'destroy'])->name('job-posts.destroy');

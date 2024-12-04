@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'SemuaKerja') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -81,7 +81,7 @@
 
                 <!-- Footer -->
                 <footer class="mt-8 text-center text-gray-600 text-sm py-4">
-                    <p>&copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}. All rights reserved.</p>
+                    <p>&copy; {{ date('Y') }} SemuaKerja. All rights reserved.</p>
                 </footer>
             </div>
         </div>

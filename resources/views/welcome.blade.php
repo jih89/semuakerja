@@ -62,16 +62,22 @@
                                     {{ Auth::user()->name }}
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('dashboard') }}">
-                                            <i class="bi bi-speedometer2 me-2"></i>Dashboard
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                                            <i class="bi bi-person me-2"></i>Profile
-                                        </a>
-                                    </li>
+                                    @if(auth()->user()->role === 'job_seeker')
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                                <i class="bi bi-person me-2"></i>Profile
+                                            </a>
+                                        </li>
+                                    @endif
+                                    
+                                    @if(auth()->user()->role === 'admin')
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
+                                                <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                                            </a>
+                                        </li>
+                                    @endif
+
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <form method="POST" action="{{ route('logout') }}">
@@ -101,7 +107,7 @@
 
     <!-- Hero Section -->
     <section class="hero-section">
-        <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902" alt="Hero image" class="hero-image">
+        <img src="{{ asset('images/hero-image.jpg') }}" alt="Hero image" class="hero-image">
         <div class="hero-overlay"></div>
         <div class="hero-content d-flex align-items-center">
             <div class="container">
@@ -133,7 +139,7 @@
                         <div class="card job-card h-100">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    <a href="{{ route('job-posts.show', $job) }}" class="text-decoration-none text-dark">
+                                    <a href="{{ auth()->check() ? route('job-posts.show', $job) : route('login') }}" class="text-decoration-none text-dark">
                                         {{ $job->title }}
                                     </a>
                                 </h5>
@@ -153,7 +159,9 @@
                                     </small>
                                 </div>
                                 <p class="card-text text-muted small">{{ Str::limit($job->description, 150) }}</p>
-                                <a href="{{ route('job-posts.show', $job) }}" class="btn btn-primary">View Details</a>
+                                <a href="{{ auth()->check() ? route('job-posts.show', $job) : route('login') }}" class="btn btn-primary">
+                                    View Details
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -220,7 +228,7 @@
     <!-- Footer -->
     <footer class="bg-dark text-white py-4">
         <div class="container text-center">
-            <p class="mb-0">&copy; {{ date('Y') }} JobSeeker. All rights reserved.</p>
+            <p class="mb-0">&copy; {{ date('Y') }} SemuaKerja. All rights reserved.</p>
         </div>
     </footer>
 

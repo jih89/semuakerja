@@ -11,10 +11,26 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    @if(auth()->user()->role === 'admin')
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                    @elseif(auth()->user()->role === 'employer')
+                        <x-nav-link :href="route('employer.dashboard')" :active="request()->routeIs('employer.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('employer.applications')" :active="request()->routeIs('employer.applications')">
+                            {{ __('Applications') }}
+                        </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('job-posts.index')" :active="request()->routeIs('job-posts.index')">
+                            {{ __('Job Posts') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('user.applications')" :active="request()->routeIs('user.applications')">
+                            {{ __('My Applications') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
